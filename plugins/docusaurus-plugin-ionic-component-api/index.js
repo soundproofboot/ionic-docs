@@ -1,4 +1,6 @@
 const fetch = require('node-fetch');
+// temp data to test docs generated from these changes https://github.com/perrygovier/ionic/pull/1
+import tempData from './tempDocs.json';
 
 module.exports = function (context, options) {
   return {
@@ -19,9 +21,10 @@ module.exports = function (context, options) {
        */
       const generateMarkdownForVersion = async (version, npmTag, isCurrentVersion) => {
         let COMPONENT_LINK_REGEXP;
-        const response = await fetch(`https://unpkg.com/@ionic/docs@${npmTag}/core.json`);
-        const { components } = await response.json();
-
+        // replace fetch of components with tempData generated from build for this PR https://github.com/perrygovier/ionic/pull/1
+        // const response = await fetch(`https://unpkg.com/@ionic/docs@${npmTag}/core.json`);
+        // const { components } = await response.json();
+        const { components } = tempData;
         const names = components.map((component) => component.tag.slice(4));
         // matches all relative markdown links to a component, e.g. (../button)
         COMPONENT_LINK_REGEXP = new RegExp(`\\(../(${names.join('|')})/?(#[^)]+)?\\)`, 'g');
